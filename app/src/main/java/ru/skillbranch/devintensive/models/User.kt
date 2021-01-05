@@ -10,8 +10,8 @@ data class User(
     var avatar: String?,
     var rating: Int = 0,
     var respect: Int = 0,
-    val lastVisit: Date? = null,
-    val isOnline: Boolean = false
+    val lastVisit: Date? = Date(),
+    val isOnline: Boolean = false,
 ) {
     constructor(id: String, firstName: String?, lastName: String?) : this(
         id = id,
@@ -34,7 +34,7 @@ data class User(
 
         fun makeUser(fullName: String?): User {
             lastId++
-            if (fullName!!.isBlank() || fullName!!.isEmpty()) return User(id = "$lastId")
+            if (fullName.isNullOrBlank()) return User(id = "$lastId")
             val (firstName, lastName) = Utils.parseFullName(fullName)
             return User(id = "$lastId", firstName = firstName, lastName = lastName)
         }

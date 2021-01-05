@@ -2,30 +2,28 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
-        //if(fullName!!.isBlank()) return
-
         val parts: List<String>? = fullName?.trim()?.split(" ")
 
-        val firstName = parts?.getOrNull(0)
+        var firstName = parts?.getOrNull(0)
+        if (firstName.isNullOrBlank()) firstName = null
         val lastName = parts?.getOrNull(1)
 
         return firstName to lastName
     }
 
-    fun transliterations(payload: String, divider: String = " "): String {
+    fun transliteration(payload: String, divider: String = " "): String {
         var result = ""
-        payload.withIndex().forEach { (index, element) -> when (element.toLowerCase()) {
+        payload.forEachIndexed { index, element ->
+            when (element.toLowerCase()) {
                 'а' -> result += if (element.isUpperCase()) "A" else "a"
                 'б' -> result += if (element.isUpperCase()) "B" else "b"
                 'в' -> result += if (element.isUpperCase()) "V" else "v"
-                'г' -> result += if (element.isUpperCase()) "V" else "g"
-                'д' -> result += if (element.isUpperCase()) "V" else "d"
-                'е', 'э' -> result += if (element.isUpperCase()) "E" else "e"
-                'ё' -> result += if (element.isUpperCase()) "Jo" else "jo"
+                'г' -> result += if (element.isUpperCase()) "G" else "g"
+                'д' -> result += if (element.isUpperCase()) "D" else "d"
+                'е', 'ё', 'э' -> result += if (element.isUpperCase()) "E" else "e"
                 'ж' -> result += if (element.isUpperCase()) "Zh" else "zh"
                 'з' -> result += if (element.isUpperCase()) "Z" else "z"
-                'и' -> result += if (element.isUpperCase()) "I" else "i"
-                'й' -> result += if (element.isUpperCase()) "J" else "j"
+                'и', 'й', 'ы' -> result += if (element.isUpperCase()) "I" else "i"
                 'к' -> result += if (element.isUpperCase()) "K" else "k"
                 'л' -> result += if (element.isUpperCase()) "L" else "l"
                 'м' -> result += if (element.isUpperCase()) "M" else "m"
@@ -38,11 +36,10 @@ object Utils {
                 'у' -> result += if (element.isUpperCase()) "U" else "u"
                 'ф' -> result += if (element.isUpperCase()) "F" else "f"
                 'х' -> result += if (element.isUpperCase()) "H" else "h"
-                'ц' -> result += if (element.isUpperCase()) "Ts" else "ts"
+                'ц' -> result += if (element.isUpperCase()) "C" else "c"
                 'ч' -> result += if (element.isUpperCase()) "Ch" else "ch"
                 'ш', 'щ' -> result += if (element.isUpperCase()) "Sh" else "sh"
-                'ъ', 'ь' -> result += if (element.isUpperCase()) "'" else "'"
-                'ы' -> result += if (element.isUpperCase()) "Y" else "y"
+                'ъ', 'ь' -> result += if (element.isUpperCase()) "" else ""
                 'ю' -> result += if (element.isUpperCase()) "Yu" else "yu"
                 'я' -> result += if (element.isUpperCase()) "Ya" else "ya"
                 ' ' -> result += divider
@@ -52,7 +49,13 @@ object Utils {
         return result
     }
 
-    fun initials(firstName: String?, lastName: String?): String? =
-        "${firstName?.first()?.toUpperCase()}${lastName?.first()?.toUpperCase()}"
+    fun toInitials(firstName: String?, lastName: String?): String? =
+        if (!firstName.isNullOrBlank() && lastName.isNullOrBlank())
+            firstName[0].toUpperCase().toString()
+        else if (firstName.isNullOrBlank() && !lastName.isNullOrBlank())
+            lastName[0].toUpperCase().toString()
+        else if (!firstName.isNullOrBlank() && !lastName.isNullOrBlank())
+            "${firstName.first().toUpperCase()}${lastName.first().toUpperCase()}"
+        else null
 
 }

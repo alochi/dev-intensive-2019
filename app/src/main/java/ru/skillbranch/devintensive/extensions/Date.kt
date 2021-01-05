@@ -8,7 +8,7 @@ const val MINUTE = 60 * SECOND
 const val HOUR = 60 * MINUTE
 const val DAY = 24 * HOUR
 
-fun Date.format(pattern: String = "HH:mm:ss dd:MM:yyyy"): String {
+fun Date.format(pattern: String = "HH:mm:ss dd:MM:yy"): String {
     val dateFormat = SimpleDateFormat(pattern, Locale("ru"))
     return dateFormat.format(this)
 }
@@ -45,6 +45,7 @@ fun Date.humanizeDiff(date: Date = Date()): String {
             in DAY * 366..DAY * 365 * 2 -> "больше года назад"
             else -> "больше нескольких лет назад"
         }
+
 }
 
 fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {

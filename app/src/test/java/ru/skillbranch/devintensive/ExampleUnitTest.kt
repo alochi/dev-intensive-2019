@@ -10,8 +10,7 @@ import ru.skillbranch.devintensive.extensions.toUserView
 import ru.skillbranch.devintensive.models.BaseMessage
 import ru.skillbranch.devintensive.models.Chat
 import ru.skillbranch.devintensive.models.User
-import ru.skillbranch.devintensive.models.UserView
-import java.io.File
+import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
 /**
@@ -69,20 +68,56 @@ class ExampleUnitTest {
 
     @Test
     fun test_data_maping() {
-        val user = User.makeUser("John Wick")
+        val user = User.makeUser(" ")
         val userNew = user.copy(lastVisit = Date().add(-1, TimeUnits.DAY))
-        println(userNew)
-
         val userView = userNew.toUserView()
 
         userView.printMe()
     }
 
     @Test
+    fun test_transliteration() {
+        println(Utils.transliteration("Женя Стереотипов")) //Zhenya Stereotipov
+        println(Utils.transliteration("Amazing Петр", "_")) //Amazing_Petr
+    }
+
+    @Test
+    fun test_parseFullName() {
+        println(Utils.parseFullName(null))
+        println(Utils.parseFullName(""))
+        println(Utils.parseFullName(" "))
+        println(Utils.parseFullName("Sdg"))
+        println(Utils.parseFullName("Sdg sdffsdf"))
+    }
+
+    @Test
+    fun test_toInitials() {
+        println(Utils.toInitials("john", "doe")) //JD
+        println(Utils.toInitials("John", null)) //J
+        println(Utils.toInitials(null, null)) //null
+        println(Utils.toInitials("John", "")) //null
+        println(Utils.toInitials(" ", " ")) //null
+    }
+
+    @Test
+    fun test_dateFormat() {
+        println(Date().format()) //14:00:00 27.06.19
+        print(Date().format("HH:mm")) //14:00
+    }
+
+    @Test
     fun test_abstract_factory() {
         val user = User.makeUser("Очиров Алдар")
-        val txtMessage = BaseMessage.makeMessage(user, Chat("0"), payload = "any text message", type = "text")
-        val imgMessage = BaseMessage.makeMessage(user, Chat("0"), payload = "any image url", type = "image")
+        val txtMessage = BaseMessage.makeMessage(user,
+            Chat("0"),
+            date = Date(),
+            payload = "any text message",
+            type = "text")
+        val imgMessage = BaseMessage.makeMessage(user,
+            Chat("0"),
+            date = Date().add(-1, TimeUnits.DAY),
+            payload = "any image url",
+            type = "image")
 
         println(txtMessage.formatMessage())
         println(imgMessage.formatMessage())
