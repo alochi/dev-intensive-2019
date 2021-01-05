@@ -11,7 +11,7 @@ data class User(
     var rating: Int = 0,
     var respect: Int = 0,
     val lastVisit: Date? = Date(),
-    val isOnline: Boolean = false,
+    val isOnline: Boolean = false
 ) {
     constructor(id: String, firstName: String?, lastName: String?) : this(
         id = id,
