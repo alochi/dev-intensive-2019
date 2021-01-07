@@ -8,6 +8,13 @@
     tools:context=".MainActivity"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/iv_bender"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/bender_dance2"
+        android:layout_weight="1"/>
+
     <TextView
         android:id="@+id/tv_text"
         android:layout_width="match_parent"
@@ -20,13 +27,6 @@
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="@dimen/font_large_24"/>
 
-    <ImageView
-        android:id="@+id/iv_bender"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:src="@drawable/bender_dance"
-        android:layout_weight="1"/>
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/spacing_normal_16">
 
         <EditText
-            android:id="@+id/iv_text"
+            android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,6 +49,7 @@
             android:layout_marginRight="@dimen/spacing_normal_16"/>
         
         <ImageView
+            android:id="@+id/iv_send"
             android:layout_width="@dimen/image_button_24"
             android:layout_height="@dimen/image_button_24"
             android:src="@drawable/ic_send_black_24dp"
