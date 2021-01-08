@@ -12,7 +12,7 @@
         android:id="@+id/iv_bender"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/bender_dance2"
+        android:src="@drawable/bender_dance"
         android:layout_weight="1"/>
 
     <TextView
