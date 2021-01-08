@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         val status = savedInstanceState?.getString("STATUS") ?: Bender.Status.NORMAL.name
         val question = savedInstanceState?.getString("QUESTION") ?: Bender.Question.NAME.name
+        val et = savedInstanceState?.getString("EDITTEXT") ?: ""
         benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
 
         Log.d("M_MainActivity","onCreate")
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
 
         textTxt.text = benderObj.askQuestion()
+        messageEt.setText(et)
         sendBtn.setOnClickListener(this)
     }
 
@@ -78,8 +80,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         outState.putString("STATUS", benderObj.status.name)
         outState.putString("QUESTION", benderObj.question.name)
+        outState.putString("EDITTEXT", messageEt.text.toString())
 
-        Log.d("M_MainActivity","onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name}")
+        Log.d("M_MainActivity","onSaveInstanceState ${benderObj.status.name} ${benderObj.question.name} ${messageEt.text}")
     }
 
     override fun onClick(v: View?) {

@@ -15,14 +15,15 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         if (question.answers.contains(answer)) {
             question = question.nextQuestion()
             "Отлично - ты справился\n${if (question != Question.IDLE) question.question else "На этом все, вопросов больше нет"}" to status.color
-        } else {
+        } else if (question != Question.IDLE) {
             status = status.nextStatus()
-            if (status != Status.NORMAL)
-                "Это не правильный ответ\n${question.question}" to status.color
-            else {
+            if (status == Status.NORMAL) {
                 question = Question.NAME
                 "Это не правильный ответ. Давай все по новой\n${question.question}" to status.color
-            }
+            } else
+                "Это не правильный ответ\n${question.question}" to status.color
+        } else {
+            "Отлично - ты справился\nНа этом все, вопросов больше нет" to status.color
         }
 
     enum class Status(val color: Triple<Int, Int, Int>) {
